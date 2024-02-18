@@ -31,6 +31,7 @@ predictions <- predict(model, test_images)
 pd <- reticulate::import("pandas")
 df <- pd$DataFrame(tensorflow::tf$nn$softmax(predictions))
 
+#renv::install('tidyverse')
 library(tidyverse)
 pred_df <- df |> as_tibble()
 colnames(pred_df) <- paste0("Digit",sort(unique(test_labels)))
