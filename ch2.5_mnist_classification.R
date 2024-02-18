@@ -1,3 +1,5 @@
+#chapter 2 in book and https://tensorflow.rstudio.com/tutorials/quickstart/beginner#build-a-machine-learning-model
+
 #renv::install("keras")
 library(tensorflow)
 library(keras)
