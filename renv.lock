@@ -8,6 +8,11 @@
       }
     ]
   },
+  "Python": {
+    "Version": "3.9.18",
+    "Type": "virtualenv",
+    "Name": "/Users/nickgiangreco/.virtualenvs/r-tensorflow"
+  },
   "Packages": {
     "renv": {
       "Package": "renv",
