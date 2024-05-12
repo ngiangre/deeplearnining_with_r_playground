@@ -63,7 +63,7 @@ train_data <- polypharmacy_ade_class_dataset |>
     select(-ade,-polypharmacy) |>
     as.matrix()
 train_labels <-
-    (polypharmacy_ade_class_dataset$polypharmacy>4) |>
+    (polypharmacy_ade_class_dataset$polypharmacy>2) |>
     as.integer()
 
 models <- list()
@@ -71,13 +71,13 @@ model_histories <- list()
 model_metrics_df <- list()
 cross_df <- expand.grid(
     model_nds = c(3,16,64),
-    dropout_percent = c(0,0.2),
-    batch_size= c(512)
+    dropout_percent = c(0.2),
+    batch_size= c(256,512,1024)
 )
 model_nds <- cross_df$model_nds
 dropout_percent <- cross_df$dropout_percent
 batch_size <- cross_df$batch_size
-n_epochs <- 25
+n_epochs <- 10
 for(i in 1:nrow(cross_df)){
     model_name <- stringr::str_glue(
         '{model_nds[i]}denseunits_',
@@ -88,12 +88,10 @@ for(i in 1:nrow(cross_df)){
         models[[ model_name ]] <-
             keras_model_sequential() |>
             layer_dense(model_nds[1],activation = 'relu') |>
-            layer_dense(model_nds[1],activation = 'relu') |>
             layer_dense(1,activation = 'sigmoid')
     }else{
         models[[ model_name ]] <-
             keras_model_sequential() |>
-            layer_dense(model_nds[1],activation = 'relu') |>
             layer_dense(model_nds[1],activation = 'relu') |>
             layer_dropout(dropout_percent[i]) |>
             layer_dense(1,activation = 'sigmoid')
